@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+    app_amqp:
+        image: dokregisto.taranovegor.com/com/ligilo_app_amqp
+        container_name: com_ligilo_app_amqp
+        restart: on-failure
+        environment:
+            - APP_URL
+            - AMQP_DSN
+            - DATABASE_DSN
+    app_http:
+        image: dokregisto.taranovegor.com/com/ligilo_app_http
+        container_name: com_ligilo_app_http
+        restart: on-failure
+        environment:
+            - HTTP_PORT
+            - DATABASE_DSN
+            - FALLBACK_URL
+        ports:
+            - $HTTP_PORT:$HTTP_PORT
