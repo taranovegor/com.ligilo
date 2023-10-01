@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+    app_amqp:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                SCOPE: amqp
+    app_http:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                SCOPE: http
