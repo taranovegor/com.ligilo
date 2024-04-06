@@ -4,5 +4,5 @@ import kontrakto "github.com/taranovegor/com.kontrakto"
 
 const (
 	AppName = kontrakto.AppLigilo
-	Version = "0.1.1"
+	Version = "0.2.0"
 )
