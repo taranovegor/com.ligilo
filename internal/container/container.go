@@ -1,7 +1,6 @@
 package container
 
 import (
-	"github.com/go-chi/chi/v5"
 	"github.com/sarulabs/di"
 	kontrakto "github.com/taranovegor/com.kontrakto"
 	"github.com/taranovegor/com.ligilo/internal/config"
@@ -14,6 +13,7 @@ import (
 	amqp "github.com/taranovegor/pkg.amqp"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	mux "net/http"
 )
 
 const (
@@ -123,10 +123,9 @@ func buildHandlerHttp(builder *di.Builder) {
 	builder.Add(di.Def{
 		Name: HttpRouter,
 		Build: func(ctx di.Container) (interface{}, error) {
-			router := chi.NewRouter()
+			router := mux.NewServeMux()
 			http.MapRouter(
 				router,
-				config.GetEnv(config.FallbackUrl),
 				ctx.Get(handlerHttpLink).(*http.LinkHandler),
 			)
 
@@ -139,6 +138,7 @@ func buildHandlerHttp(builder *di.Builder) {
 		Build: func(ctx di.Container) (interface{}, error) {
 			return http.NewLinkHandler(
 				ctx.Get(repositoryLink).(domain.LinkRepository),
+				config.GetEnv(config.FallbackUrl),
 			), nil
 		},
 	})
